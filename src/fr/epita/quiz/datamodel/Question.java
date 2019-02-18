@@ -5,17 +5,14 @@ import java.util.List;
 
 public class Question {
 	
-	private String question;
-	private String[] topics;
-	private int difficulty;
-	private Answer answer;
+	protected String question;
+	protected String[] topics;
+	protected int difficulty;
+	protected Boolean isCorrect;
+	protected int number;
 	
-	@Override
-	public String toString() {
-		return "Question [question=" + question + ", topics=" + Arrays.toString(topics) + ", difficulty=" + difficulty
-				+ ", getQuestion()=" + getQuestion() + ", getTopics()=" + Arrays.toString(getTopics())
-				+ ", getDifficulty()=" + getDifficulty() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+	public Question() {
+		this.isCorrect = false;
 	}
 	
 	public String getQuestion() {
@@ -42,11 +39,16 @@ public class Question {
 		this.difficulty = difficulty;
 	}
 
-	public Answer getAnswer() {
-		return answer;
+	public Boolean getIsCorrect() {
+		return isCorrect;
 	}
 
-	public void setAnswer(Answer answer) {
-		this.answer = answer;
+	public void setIsCorrect(Boolean isCorrect) {
+		this.isCorrect = isCorrect;
 	}
+	
+	public void gradeAnswer() {
+		
+	}
+
 }
