@@ -14,11 +14,8 @@ public class Configuration {
 
 	private Configuration() {
 		this.properties = new Properties();
-		//TODO make the test.properties variable (use a system variable?)
-		String confLocation = System.getProperty("conf.location");
-		//TODO design a fallback if the system variable is not set
-		try (InputStream is = new FileInputStream(new File(confLocation))) {
-			properties.load(is);
+		try (InputStream is = new FileInputStream(new File("conf.properties"))) {
+			this.properties.load(is);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -34,7 +31,7 @@ public class Configuration {
 	}
 
 	public String getConfigurationValue(String configurationKey) {
-		return properties.getProperty(configurationKey);
+		return this.properties.getProperty(configurationKey);
 	}
 
 }

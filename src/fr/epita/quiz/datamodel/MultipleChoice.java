@@ -43,6 +43,11 @@ public class MultipleChoice extends Question {
 	}
 	
 	@Override
+	public String toString() {
+		return "MultipleChoice [answer=" + answer + ", choice=" + choice + ", options=" + options + "]";
+	}
+
+	@Override
 	public void gradeAnswer() {
 		if (this.choice == this.answer) {
 			System.out.println("Bien fait! The correct answer is " + this.answer);

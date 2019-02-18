@@ -1,15 +1,22 @@
 package fr.epita.quiz.datamodel;
 
 import java.sql.Array;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Question {
 	
 	protected String question;
-	protected Array topics;
+	protected List<String> topics;
 	protected int difficulty;
 	protected Boolean isCorrect;
 	protected int number;
 	protected long id;
+
+	public Question() {
+		this.isCorrect = false;
+		this.topics = new LinkedList<String>();
+	}
 	
 	public int getNumber() {
 		return number;
@@ -27,9 +34,6 @@ public class Question {
 		this.id = id;
 	}
 
-	public Question() {
-		this.isCorrect = false;
-	}
 	
 	public String getQuestion() {
 		return question;
@@ -39,12 +43,16 @@ public class Question {
 		this.question = question;
 	}
 	
-	public Array getTopics() {
-		return topics;
+	public List<String> getTopics() {
+		return this.topics;
+	}
+
+	public void setTopics(LinkedList<String> topics) {
+		this.topics = topics;
 	}
 	
-	public void setTopics(Array topics) {
-		this.topics = topics;
+	public void addTopic(String topic) {
+		this.topics.add(topic);
 	}
 	
 	public int getDifficulty() {
