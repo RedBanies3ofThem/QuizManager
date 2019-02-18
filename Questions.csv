@@ -19,8 +19,3 @@ How does a FOR loop start?;3;[JavaScript];"for (i = 0; i <= 5; i++)";"for (i <= 
 What is the correct file extension for Python files?;1;[Python];;;;;.py
 Which one is NOT a legal variable name?;3;[Python];my_var;Myvar;_myvar;my-var;3
 Which method can be used to return a string in upper case letters?;4;[Python];uppercase();toUpperCase();upperCase();upper();3
-;;;;;;;
-;;;;;;;
-;;;;;;;
-;;;;;;;
-;;;;;;;
