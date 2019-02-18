@@ -20,7 +20,7 @@ public class QuestionJDBCDAO {
    private static String READ_STATEMENT = "SELECT * FROM BANK";
    private static String UPDATE_STATEMENT = "UPDATE BANK SET QUESTION=?, DIFFICULTY=?, " 
 		   + "TOPICS=?, OP_1=?, OP_2=?, OP_3=?, OP_4=?, ANSWER=? WHERE ID=?";
-   private static String DELETE_STATEMENT = "DELETE FROM BANK WHERE ID = ?";
+   private static String DELETE_STATEMENT = "DELETE FROM BANK WHERE ID=?";
    private static String SEARCH_STATEMENT = "SELECT * from BANK WHERE DIFFICULTY=?";
    
    public void create(MultipleChoice question) {
@@ -69,6 +69,7 @@ public class QuestionJDBCDAO {
 				mc.addOption(results.getString("OP_3"));
 				mc.addOption(results.getString("OP_4"));
 				mc.setAnswer(results.getInt("ANSWER"));
+				mc.setId(results.getInt("ID"));
 				resultList.add(mc);
 			}
 			results.close();
@@ -98,6 +99,7 @@ public class QuestionJDBCDAO {
 			updateStatement.setLong(9, question.getId());
 
 			updateStatement.execute();
+			System.out.println("Updated question : " + question.toString());
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -107,8 +109,9 @@ public class QuestionJDBCDAO {
 	public void delete(MultipleChoice question) {
 		try (Connection connection = getConnection();
 			PreparedStatement deleteStatement = connection.prepareStatement(DELETE_STATEMENT)){
-			deleteStatement.setLong(1, question.getId());
-			deleteStatement.executeQuery();
+			deleteStatement.setInt(1, question.getId());
+			deleteStatement.executeUpdate();
+			System.out.println("Deleted question : " + question.toString());
 		}
 		catch (SQLException e) {
 			e.printStackTrace();

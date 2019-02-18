@@ -11,7 +11,7 @@ public class Question {
 	protected int difficulty;
 	protected Boolean isCorrect;
 	protected int number;
-	protected long id;
+	protected int id;
 
 	public Question() {
 		this.isCorrect = false;
@@ -26,11 +26,11 @@ public class Question {
 		this.number = number;
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
