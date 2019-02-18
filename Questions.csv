@@ -1,0 +1,26 @@
+﻿QUESTION;DIFFICULTY;TOPIC;OP1;OP2;OP3;OP4;ANSWER
+What is a context in android ?;1;[Android];It is an interface to store global information about an application ;It is used to create new components.;Android has two contexts, those are getContext() and getApplicationContext();All of Above;3
+What is broadcast receiver in android?;2;[Android];It will react on broadcast announcements.;It will do background functionalities as services.;It will pass the data between activities.;None of the Above;0
+How to upgrade SQlite the database from a lower version to higher version in android SQlite?;3;[Android];;;;;Using helper Class
+How to get current location in android?;5;[Android]; Using with GPRS;Using location provider ;A & B;SQlite;2
+What does HTML stand for?;1;[HTML];Hyper Text Markup Language;Home Tool Markup Language;Hyperlinks and Text Markup Language;Hyperlinks Tool Markup Language;0
+Who is making the Web standards?;3;[HTML];The World Wide Web Consortium;Mozilla;Microsoft;Google;0
+What is the correct HTML element for inserting a line break?;4;[HTML];;;;;<br>
+What is the correct HTML for adding a background color?;3;[HTML];;;;;"<body style=""background-color:yellow;"">"
+What does CSS stand for?;2;[CSS];Creative Style Sheets;Colorful Style Sheets;Cascading Style Sheets;Computer Style Sheets;2
+What is the default value of the position property?;1;[CSS];;;;;Static
+"How do you select an element with id ""demo""?";3;[CSS];;;;;#demo
+"When using the padding property; are you allowed to use negative values?";5;[CSS];Yes;No;;;1
+How do you round the number 7.25, to the nearest integer?;2;[JavaScript];rnd(7.25);round(7.25);Math.rnd(7.25);Math.round(7.25);3
+The external JavaScript file must contain the <script> tag.;3;[JavaScript];TRUE;FALSE;;;1
+Which event occurs when the user clicks on an HTML element?;5;[JavaScript];onchange;onmouseclick;onmouseover;onclick;3
+How can you detect the client's browser name?;5;[JavaScript];;;;;navigator.appName
+How does a FOR loop start?;3;[JavaScript];"for (i = 0; i <= 5; i++)";"for (i <= 5; i++)";"for (i = 0; i <= 5)";for i = 1 to 5;0
+What is the correct file extension for Python files?;1;[Python];;;;;.py
+Which one is NOT a legal variable name?;3;[Python];my_var;Myvar;_myvar;my-var;3
+Which method can be used to return a string in upper case letters?;4;[Python];uppercase();toUpperCase();upperCase();upper();3
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
