@@ -15,5 +15,10 @@ public class Open extends Question {
 	public void setResponse(String response) {
 		this.response = response;
 	}
+	
+	@Override
+	public void gradeAnswer() {
+		System.out.println("Unable to grade Open questions.");
+	}
 
 }

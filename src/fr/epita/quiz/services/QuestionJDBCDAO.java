@@ -6,46 +6,124 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+import fr.epita.quiz.datamodel.MultipleChoice;
 import fr.epita.quiz.datamodel.Question;
 
 public class QuestionJDBCDAO {
 	
-   private static final String INSERT_STATEMENT = "INSERT INTO QUESTION (QUESTION, DIFFICULTY) VALUES (?, ?)";
-   private static final String SEARCH_STATEMENT = "SELECT * FROM QUESTION";
-   private static final String UPDATE_STATEMENT = "UPDATE QUESTION SET QUESTION=?, DIFFICULTY=? WHERE ID=?";
-   private static final String DELETE_STATEMENT = "DELETE FROM QUESTION WHERE ID = ?";
+   private static String INSERT_STATEMENT = "INSERT INTO BANK (QUESTION, DIFFICULTY, TOPICS, "
+		   + "OP_1, OP_2, OP_3, OP_4, ANSWER) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+   private static String READ_STATEMENT = "SELECT * FROM BANK";
+   private static String UPDATE_STATEMENT = "UPDATE BANK SET QUESTION=?, DIFFICULTY=?, " 
+		   + "TOPICS=?, OP_1=?, OP_2=?, OP_3=?, OP_4=?, ANSWER=? WHERE ID=?";
+   private static String DELETE_STATEMENT = "DELETE FROM BANK WHERE ID = ?";
+   private static String SEARCH_STATEMENT = "SELECT * from BANK WHERE DIFFICULTY=?";
 	
-	public void create(Question question) {
-		
+   
+   public void create(MultipleChoice question) {
 		try (Connection connection = getConnection();
 				PreparedStatement insertStatement = connection.prepareStatement(INSERT_STATEMENT);) {
-			
 			insertStatement.setString(1, question.getQuestion());
 			insertStatement.setInt(2, question.getDifficulty());
-			
+			insertStatement.setArray(3, question.getTopics());
+			insertStatement.setString(4, question.getOptions().get(0));
+			insertStatement.setString(5, question.getOptions().get(1));
+			insertStatement.setString(6, question.getOptions().get(2));
+			insertStatement.setString(7, question.getOptions().get(3));
+			insertStatement.setInt(8, question.getAnswer());
 			insertStatement.execute();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public List<MultipleChoice> read() {
+		List<MultipleChoice> resultList = new LinkedList<MultipleChoice>();
+		try (Connection connection = getConnection();
+			PreparedStatement readStatement = connection.prepareStatement(READ_STATEMENT)){
+			ResultSet results = readStatement.executeQuery();
+			while (results.next()) {
+				MultipleChoice mc = new MultipleChoice();
+				mc.setQuestion(results.getString("QUESTION"));
+				mc.setDifficulty(results.getInt("DIFFICULTY"));
+				mc.setTopics(results.getArray("TOPICS"));
+				mc.addOption(results.getString("OP_1"));
+				mc.addOption(results.getString("OP_2"));
+				mc.addOption(results.getString("OP_3"));
+				mc.addOption(results.getString("OP_4"));
+				mc.setAnswer(results.getInt("ANSWER"));
+				resultList.add(mc);
+			}
+			results.close();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return resultList;
+	}
 
-	public void update(Question question) {
-		
-
-		
+	
+	public void update(MultipleChoice question) {
 		try (Connection connection = getConnection();
 			PreparedStatement updateStatement = connection.prepareStatement(UPDATE_STATEMENT)){
 			updateStatement.setString(1, question.getQuestion());
 			updateStatement.setInt(2, question.getDifficulty());
-			updateStatement.setInt(3, question.getId());
-			updateStatement.executeQuery();
+			updateStatement.setArray(3, question.getTopics());
+			updateStatement.setString(4, question.getOptions().get(0));
+			updateStatement.setString(5, question.getOptions().get(1));
+			updateStatement.setString(6, question.getOptions().get(2));
+			updateStatement.setString(7, question.getOptions().get(3));
+			updateStatement.setInt(8, question.getAnswer());
+			updateStatement.setLong(9, question.getId());
+
+			updateStatement.execute();
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+
+
+	public void delete(MultipleChoice question) {
+		try (Connection connection = getConnection();
+			PreparedStatement deleteStatement = connection.prepareStatement(DELETE_STATEMENT)){
+			deleteStatement.setLong(1, question.getId());
+			deleteStatement.executeQuery();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+
+	public List<Question> search(int difficulty) {
+		List<Question> resultList = new LinkedList<Question>();
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_STATEMENT);
+				) {
+			preparedStatement.setInt(1, difficulty);
+			ResultSet results = preparedStatement.executeQuery();
+			while (results.next()) {
+				MultipleChoice mc = new MultipleChoice();
+				mc.setQuestion(results.getString("QUESTION"));
+				mc.setDifficulty(results.getInt("DIFFICULTY"));
+				mc.setTopics(results.getArray("TOPICS"));
+				mc.addOption(results.getString("OP_1"));
+				mc.addOption(results.getString("OP_2"));
+				mc.addOption(results.getString("OP_3"));
+				mc.addOption(results.getString("OP_4"));
+				mc.setAnswer(results.getInt("ANSWER"));
+				resultList.add(mc);
+			}
+			results.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resultList;
+	}
+	
 
 	private Connection getConnection() throws SQLException {
 		Configuration conf = Configuration.getInstance();
@@ -54,48 +132,6 @@ public class QuestionJDBCDAO {
 		String password = conf.getConfigurationValue("jdbc.password");
 		Connection connection = DriverManager.getConnection(jdbcUrl, user, password);
 		return connection;
-	}
-
-	public void delete(Question question) {
-		
-		try (Connection connection = getConnection();
-			PreparedStatement deleteStatement = connection.prepareStatement(DELETE_STATEMENT)){
-			deleteStatement.setInt(1, question.getId());
-			deleteStatement.executeQuery();
-		}catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public List<Question> search(Question question) {
-		List<Question> resultList = new ArrayList<Question>();
-		
-		/*SELECT 
-	    ID,DIFFICULTY,QUESTION 
-	    FROM QUESTION 
-	    WHERE
-	       DIFFICULTY = 1
-	    and 
-	      QUESTION LIKE '%JV%'
-	      
-	      */
-		String selectQuery = "select  from QUESTION WHERE ";
-		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
-				) {
-
-		
-			ResultSet results = preparedStatement.executeQuery();
-			while (results.next()) {
-
-				Question currentQuestion = new Question();
-				resultList.add(currentQuestion);
-			}
-			results.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return resultList;
 	}
 
 }

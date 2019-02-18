@@ -1,19 +1,18 @@
 package fr.epita.quiz.datamodel;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MultipleChoice extends Question {
 	
 	private int answer;
 	private int choice;
-	private Map<Integer, String> choices;
+	private List<String> options;
 	
 	public MultipleChoice() {
 		super();
-		this.setChoices(new HashMap<Integer, String>());
+		this.setOptions(new LinkedList<String>());
 	}
-
 	
 	public int getChoice() {
 		return choice;
@@ -30,13 +29,17 @@ public class MultipleChoice extends Question {
 	public void setAnswer(int answer) {
 		this.answer = answer;
 	}
-	
-	public Map<Integer, String> getChoices() {
-		return choices;
+
+	public List<String> getOptions() {
+		return options;
 	}
 
-	public void setChoices(Map<Integer, String> choices) {
-		this.choices = choices;
+	public void setOptions(List<String> options) {
+		this.options = options;
+	}
+	
+	public void addOption(String option) {
+		this.options.add(option);
 	}
 	
 	@Override

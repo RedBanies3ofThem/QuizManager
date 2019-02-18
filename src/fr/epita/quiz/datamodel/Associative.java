@@ -1,7 +1,9 @@
 package fr.epita.quiz.datamodel;
 
+
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class Associative extends Question {
 
@@ -36,5 +38,16 @@ public class Associative extends Question {
 
 	public void setChoices(Map<Integer, String> choices) {
 		this.choices = choices;
+	}
+	
+	@Override
+	public void gradeAnswer() {
+		if (this.choice == this.answer) {
+			System.out.println("Bien fait! The correct answer is " + this.answer);
+			this.isCorrect = true;
+		} else {
+			System.out.println("Wrong answer for question #" + this.number);
+			this.isCorrect = false;
+		}
 	}
 }

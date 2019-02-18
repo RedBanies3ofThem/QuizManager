@@ -1,16 +1,32 @@
 package fr.epita.quiz.datamodel;
 
-import java.util.Arrays;
-import java.util.List;
+import java.sql.Array;
 
 public class Question {
 	
 	protected String question;
-	protected String[] topics;
+	protected Array topics;
 	protected int difficulty;
 	protected Boolean isCorrect;
 	protected int number;
+	protected long id;
 	
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public Question() {
 		this.isCorrect = false;
 	}
@@ -23,11 +39,11 @@ public class Question {
 		this.question = question;
 	}
 	
-	public String[] getTopics() {
+	public Array getTopics() {
 		return topics;
 	}
 	
-	public void setTopics(String[] topics) {
+	public void setTopics(Array topics) {
 		this.topics = topics;
 	}
 	
@@ -48,7 +64,7 @@ public class Question {
 	}
 	
 	public void gradeAnswer() {
-		
+		System.out.println("Need to implement method: gradeAnswer()");
 	}
 
 }
