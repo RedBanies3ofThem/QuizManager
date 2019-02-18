@@ -44,7 +44,9 @@ public class MultipleChoice extends Question {
 	
 	@Override
 	public String toString() {
-		return "MultipleChoice [answer=" + answer + ", choice=" + choice + ", options=" + options + "]";
+		return "MultipleChoice [answer=" + answer + ", choice=" + choice + ", options=" + options + ", question="
+				+ question + ", topics=" + topics + ", difficulty=" + difficulty + ", isCorrect=" + isCorrect
+				+ ", number=" + number + ", id=" + id + "]";
 	}
 
 	@Override

@@ -36,6 +36,9 @@ public class QuestionJDBCDAO {
 			insertStatement.setString(7, question.getOptions().get(3));
 			insertStatement.setInt(8, question.getAnswer());
 			insertStatement.execute();
+
+			array.free();
+			
 			System.out.println("Created question : " + question.toString());
 		} 
 		catch (SQLException e) {
@@ -52,11 +55,15 @@ public class QuestionJDBCDAO {
 				MultipleChoice mc = new MultipleChoice();
 				mc.setQuestion(results.getString("QUESTION"));
 				mc.setDifficulty(results.getInt("DIFFICULTY"));
-//				LinkedList<String> topicsList = new LinkedList<String>();
-//				Array array = results.getArray("TOPICS");
-//				String[] topics = (String[]) array.getArray();
-//				topicsList.addAll(Arrays.asList(topics));
-//				mc.setTopics(topicsList);
+				
+				Array array = results.getArray("TOPICS");
+				Object[] topics = (Object[]) array.getArray(); 
+				List<String> topicsList = new LinkedList<String>();
+				for (int i=0; i<topics.length; i++) {
+					topicsList.add((String)topics[i]);
+				}
+				mc.setTopics(topicsList);
+				
 				mc.addOption(results.getString("OP_1"));
 				mc.addOption(results.getString("OP_2"));
 				mc.addOption(results.getString("OP_3"));

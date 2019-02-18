@@ -47,7 +47,7 @@ public class Question {
 		return this.topics;
 	}
 
-	public void setTopics(LinkedList<String> topics) {
+	public void setTopics(List<String> topics) {
 		this.topics = topics;
 	}
 	
