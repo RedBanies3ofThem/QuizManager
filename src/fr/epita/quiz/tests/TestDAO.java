@@ -49,7 +49,6 @@ public class TestDAO {
 		question.addOption("Hong Kong");
 		question.setAnswer(2);
 		question.setId(1);
-		// Update question in database
 		dao.update(question);
 		
 		/*	DELETE method Test 		*/
