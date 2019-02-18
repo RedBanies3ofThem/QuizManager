@@ -12,7 +12,7 @@ create table BANK(
 	id bigint auto_increment, 
 	QUESTION varchar(255), 
 	DIFFICULTY INT,
-	TOPICS varchar32 ARRAY[10],
+	TOPICS ARRAY,
 	OP_1 varchar(255), 
 	OP_2 varchar(255), 
 	OP_3 varchar(255), 
