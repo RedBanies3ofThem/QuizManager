@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 
 public class Launcher extends Application {
 
-	private Button buttonCreateTest, buttonSubmitAnswer;
+	private Button buttonCreateTest, buttonSubmitAnswer, clear;
 	private Stage window;
 	private Scene sceneMain, sceneQuiz;
 	private Quiz quiz;
@@ -85,9 +85,10 @@ public class Launcher extends Application {
 			if (textQuizSize.getText().equals("")) {
 				textQuizSize.setText("5");
 			}
+			
 			Student student = new Student(textName.getText(), textId.getText());
 			List<String> topics = new LinkedList<String>(Arrays.asList(textTopics.getText().split(",")));
-			int numberOfQuestions = Integer.parseInt(textQuizSize.getText());
+			int numberOfQuestions = Math.max(Integer.parseInt(textQuizSize.getText()), 1);
 			this.quiz = new Quiz(student, topics, numberOfQuestions);
 			this.quiz.loadNewQuiz();
 			
@@ -122,7 +123,7 @@ public class Launcher extends Application {
 		
 		GridPane.setConstraints(this.buttonCreateTest, 1, 0);
 		layoutMain.getChildren().add(this.buttonCreateTest);
-		Button clear = new Button("Clear");
+		this.clear = new Button("Clear");
 		clear.setOnAction( a -> {
 			System.out.println("Clear button got clicked");
 			textName.setText("");
@@ -168,8 +169,7 @@ public class Launcher extends Application {
 		sceneQuiz = new Scene(layoutQuiz, 500, 300);
 		
 		this.window.show();
-		
-	}
+	}  // End of Start()
 
 	private void updateQuizUI(Label labelQuestionNumber, Label labelQuestion, 
 			RadioButton labelOp1, RadioButton labelOp2, RadioButton labelOp3, RadioButton labelOp4) {
@@ -181,7 +181,7 @@ public class Launcher extends Application {
 		labelOp2.setText(this.currentQuestion.getOptions().get(1));
 		labelOp3.setText(this.currentQuestion.getOptions().get(2));
 		labelOp4.setText(this.currentQuestion.getOptions().get(3));
-	}
+	}  // End of updateQuizUI()
 	
 	private int getUserChoice(RadioButton labelOp1, RadioButton labelOp2, RadioButton labelOp3, RadioButton labelOp4) {
 		int ret = 0;
@@ -204,5 +204,5 @@ public class Launcher extends Application {
 		labelOp4.setSelected(false);
 		
 		return ret;
-	}
+	}  // End of getUserChoice()
 }
