@@ -54,6 +54,18 @@ public class TestDAO {
 		/*	DELETE method Test 		*/
 		dao.delete(question);
 		
+		/*	SEARCH method Test 		*/
+		question.setDifficulty(1);
+		dao.create(question);
+
+		question.setDifficulty(2);
+		dao.create(question);
+
+		question.setDifficulty(3);
+		dao.create(question);
+		
+		results = dao.search(3);
+		
 	}  // end of main()
 
 }  // end of TestDAO()

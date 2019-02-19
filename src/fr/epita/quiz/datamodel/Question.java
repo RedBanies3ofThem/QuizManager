@@ -33,7 +33,6 @@ public class Question {
 	public void setId(int id) {
 		this.id = id;
 	}
-
 	
 	public String getQuestion() {
 		return question;
