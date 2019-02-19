@@ -50,6 +50,7 @@ public class QuestionJDBCDAO {
 		try (Connection connection = getConnection();
 			PreparedStatement readStatement = connection.prepareStatement(READ_STATEMENT)){
 			ResultSet results = readStatement.executeQuery();
+			
 			while (results.next()) {
 				MultipleChoice mc = new MultipleChoice();
 				mc.setQuestion(results.getString("QUESTION"));
@@ -73,9 +74,7 @@ public class QuestionJDBCDAO {
 			}
 			results.close();
 			
-			for(MultipleChoice question : resultList) {
-				System.out.println("Read question : " + question.toString());
-			}
+			System.out.println("Read questions. Found " + resultList.size());
 		} 
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -123,6 +122,7 @@ public class QuestionJDBCDAO {
 				) {
 			preparedStatement.setInt(1, difficulty);
 			ResultSet results = preparedStatement.executeQuery();
+			
 			while (results.next()) {
 				MultipleChoice mc = new MultipleChoice();
 				mc.setQuestion(results.getString("QUESTION"));
@@ -144,6 +144,59 @@ public class QuestionJDBCDAO {
 			}
 			results.close();
 			System.out.println("Searched for DIFFICULTY=" + difficulty + ".  Found " + resultList.size());
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return resultList;
+	}
+	
+	public List<MultipleChoice> search(List<String> topicSearch) {
+		List<MultipleChoice> resultList = new LinkedList<MultipleChoice>();
+		String SEARCH_STATEMENT_TOPICS = "SELECT * from BANK WHERE";
+		int numberOfTopics = topicSearch.size();
+		
+		if (numberOfTopics < 1) {
+			System.out.println("Search incomplete. Please add topics.");
+			return resultList;
+		}
+		
+		for (int i=0; i<numberOfTopics; i++) {
+			SEARCH_STATEMENT_TOPICS += " ARRAY_CONTAINS(TOPICS, '" + topicSearch.get(i) + "')";
+			
+			if (i + 1 < numberOfTopics) {
+				SEARCH_STATEMENT_TOPICS += " OR";
+			}
+		}
+
+		
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_STATEMENT_TOPICS);
+				) {
+			ResultSet results = preparedStatement.executeQuery();
+			
+			while (results.next()) {
+				MultipleChoice mc = new MultipleChoice();
+				mc.setQuestion(results.getString("QUESTION"));
+				mc.setDifficulty(results.getInt("DIFFICULTY"));
+				Array array = results.getArray("TOPICS");
+				Object[] topics = (Object[]) array.getArray(); 
+				List<String> topicsList = new LinkedList<String>();
+				for (int i=0; i<topics.length; i++) {
+					topicsList.add((String)topics[i]);
+				}
+				mc.setTopics(topicsList);
+				mc.addOption(results.getString("OP_1"));
+				mc.addOption(results.getString("OP_2"));
+				mc.addOption(results.getString("OP_3"));
+				mc.addOption(results.getString("OP_4"));
+				mc.setAnswer(results.getInt("ANSWER"));
+				mc.setId(results.getInt("ID"));
+				resultList.add(mc);
+			}
+			results.close();
+			System.out.println("Searched for TOPICS=" + topicSearch.toString() + ".  Found " + resultList.size());
 		} 
 		catch (Exception e) {
 			e.printStackTrace();

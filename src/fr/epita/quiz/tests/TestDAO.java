@@ -38,10 +38,10 @@ public class TestDAO {
 		/*	UPDATE method Test 		*/
 		question.setQuestion("Where do you live?");
 		question.setDifficulty(3);
-		topicsList.add("France");
-		topicsList.add("Informatique");
-		topicsList.add("Unix");
-		topicsList.add("Java");
+		topicsList.add("Fruit");
+		topicsList.add("Legumes");
+		topicsList.add("Viandes");
+		topicsList.add("Poisson");
 		question.setTopics(topicsList);
 		question.addOption("London");
 		question.addOption("Paris");
@@ -52,6 +52,7 @@ public class TestDAO {
 		dao.update(question);
 		
 		/*	DELETE method Test 		*/
+		question.setId(2);
 		dao.delete(question);
 		
 		/*	SEARCH method Test 		*/
@@ -62,9 +63,17 @@ public class TestDAO {
 		dao.create(question);
 
 		question.setDifficulty(3);
+		question.getTopics().clear();
+		
 		dao.create(question);
 		
 		results = dao.search(3);
+		
+		// search by topic
+		topicsList.add("Viandes");
+		topicsList.add("Poisson");
+		question.setTopics(topicsList);
+		results = dao.search(topicsList);
 		
 	}  // end of main()
 
