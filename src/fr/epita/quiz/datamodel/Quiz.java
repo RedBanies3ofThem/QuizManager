@@ -137,4 +137,13 @@ public class Quiz {
 	public Random getRandom() {
 		return random;
 	}
+
+	public List<MultipleChoice> getAvailableMCQuestions() {
+		return availableMCQuestions;
+	}
+
+	public void setAvailableMCQuestions(List<MultipleChoice> availableMCQuestions) {
+		this.availableMCQuestions = availableMCQuestions;
+	}
+
 }

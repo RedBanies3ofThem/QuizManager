@@ -1,5 +1,6 @@
 package fr.epita.quiz.launcher;
 
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,11 +8,12 @@ import java.util.List;
 import fr.epita.quiz.datamodel.MultipleChoice;
 import fr.epita.quiz.datamodel.Quiz;
 import fr.epita.quiz.datamodel.Student;
+
 import javafx.application.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -20,6 +22,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 
 public class Launcher extends Application {
 
@@ -79,10 +82,23 @@ public class Launcher extends Application {
 			if (textTopics.getText().equals("")) {
 				textTopics.setText("France,Italy");
 			}
+			if (textQuizSize.getText().equals("")) {
+				textQuizSize.setText("5");
+			}
 			Student student = new Student(textName.getText(), textId.getText());
 			List<String> topics = new LinkedList<String>(Arrays.asList(textTopics.getText().split(",")));
-			this.quiz = new Quiz(student, topics, 5);
+			int numberOfQuestions = Integer.parseInt(textQuizSize.getText());
+			this.quiz = new Quiz(student, topics, numberOfQuestions);
 			this.quiz.loadNewQuiz();
+			
+			if (this.quiz.getAvailableMCQuestions().size() < numberOfQuestions) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Please add a valid topic");
+				alert.setHeaderText(null);
+				alert.setContentText("The topics you entered are not found in the quiz database. Please enter another topic.");
+				alert.showAndWait();
+				return;
+			}
 			
 			updateQuizUI(labelQuestionNumber, labelQuestion, labelOp1, labelOp2, labelOp3, labelOp4);
 			
@@ -133,11 +149,11 @@ public class Launcher extends Application {
 			
 			updateQuizUI(labelQuestionNumber, labelQuestion, labelOp1, labelOp2, labelOp3, labelOp4);
 			
-			if (this.quiz.getProgress() >= 1.0d) {
+			System.out.println("this.quiz.getProgress() " + this.quiz.getProgress());
+			
+			if (this.quiz.getProgress() >= 1.0) {
 				this.window.setScene(sceneMain);
-			}
-			
-			
+			}			
 		});
 		
 		VBox layoutQuiz = new VBox();
@@ -158,6 +174,7 @@ public class Launcher extends Application {
 	private void updateQuizUI(Label labelQuestionNumber, Label labelQuestion, 
 			RadioButton labelOp1, RadioButton labelOp2, RadioButton labelOp3, RadioButton labelOp4) {
 		this.currentQuestion = this.quiz.getNewQuestion(1);
+		this.currentQuestion.setNumber(this.quiz.getUsedMCQuestions().size() + 1);
 		labelQuestionNumber.setText("# " + this.currentQuestion.getNumber() );
 		labelQuestion.setText(this.currentQuestion.getQuestion());
 		labelOp1.setText(this.currentQuestion.getOptions().get(0));
