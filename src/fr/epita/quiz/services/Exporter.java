@@ -22,7 +22,7 @@ public class Exporter {
 			file.createNewFile();
 		}
 		this.setFile(file);
-		this.writer = new PrintWriter(new FileOutputStream(file, true));
+		this.writer = new PrintWriter(new FileOutputStream(file, false));
 		this.setScanner(new Scanner(file));
 	}
 
