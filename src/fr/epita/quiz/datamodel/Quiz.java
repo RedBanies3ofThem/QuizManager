@@ -61,6 +61,7 @@ public class Quiz {
 	}
 	
 	public void processNewQuestion(MultipleChoice question) {
+		question.setNumber(this.usedMCQuestions.size() + 1);
 		question.gradeAnswer();
 		this.usedMCQuestions.add(question);
 		

@@ -52,10 +52,10 @@ public class MultipleChoice extends Question {
 	@Override
 	public void gradeAnswer() {
 		if (this.choice == this.answer) {
-			System.out.println("Bien fait! The correct answer is " + this.answer);
+			System.out.println("Question #"+ this.number + " : Bien fait!");
 			this.isCorrect = true;
 		} else {
-			System.out.println("Wrong answer for question #" + this.number);
+			System.out.println("Question #"+ this.number + " : Wrong answer.");
 			this.isCorrect = false;
 		}
 	}

@@ -22,9 +22,7 @@ public class TestQuiz {
 			MultipleChoice question = quiz.getNewQuestion(1);
 			System.out.println("New Question: " + question.getQuestion());
 			question.setChoice(quiz.getRandom().nextInt(4));
-			question.gradeAnswer();
 			quiz.processNewQuestion(question);
-			System.out.println("Correct? " + question.getIsCorrect());
 			System.out.println("Progress ...  " + quiz.getProgress());
 		}
 		
