@@ -48,14 +48,13 @@ public class Quiz {
 														.filter(q -> q.difficulty == difficulty)
 														.collect(Collectors.toList());
 		int size = temp.size();
-		System.out.println("size = " + size);
 		if (size < 1) {
 			System.out.println("getNewQuestion --> ran out of questions");
 			return null;
 		}
 		MultipleChoice newQuestion = temp.remove(this.random.nextInt(size));
-		if (this.availableMCQuestions.remove(newQuestion)) {
-			System.out.println("getNewQuestion --> Success! Question is a match.");
+		if (!this.availableMCQuestions.remove(newQuestion)) {
+			System.out.println("getNewQuestion --> Warning! Question not found in available list.");
 		}
 		return newQuestion;
 	}
