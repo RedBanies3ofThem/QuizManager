@@ -25,7 +25,7 @@ public class QuestionJDBCDAO {
    
    public void create(MultipleChoice question) {
 		try (Connection connection = getConnection();
-				PreparedStatement insertStatement = connection.prepareStatement(INSERT_STATEMENT);) {
+			PreparedStatement insertStatement = connection.prepareStatement(INSERT_STATEMENT); ) {
 			insertStatement.setString(1, question.getQuestion());
 			insertStatement.setInt(2, question.getDifficulty());
 			Array array = connection.createArrayOf("VARCHAR", question.getTopics().toArray());
@@ -118,8 +118,7 @@ public class QuestionJDBCDAO {
 	public List<MultipleChoice> search(int difficulty) {
 		List<MultipleChoice> resultList = new LinkedList<MultipleChoice>();
 		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_STATEMENT);
-				) {
+			PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_STATEMENT); ) {
 			preparedStatement.setInt(1, difficulty);
 			ResultSet results = preparedStatement.executeQuery();
 			
@@ -169,11 +168,9 @@ public class QuestionJDBCDAO {
 				SEARCH_STATEMENT_TOPICS += " OR";
 			}
 		}
-
 		
 		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_STATEMENT_TOPICS);
-				) {
+			PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_STATEMENT_TOPICS); ) {
 			ResultSet results = preparedStatement.executeQuery();
 			
 			while (results.next()) {
