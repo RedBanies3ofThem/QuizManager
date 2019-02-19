@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Scanner;
 
 import fr.epita.quiz.datamodel.MultipleChoice;
+import fr.epita.quiz.datamodel.Quiz;
 
 
 public class Exporter {
@@ -24,6 +26,16 @@ public class Exporter {
 		this.setFile(file);
 		this.writer = new PrintWriter(new FileOutputStream(file, false));
 		this.setScanner(new Scanner(file));
+	}
+	
+	public void exportAll(Quiz quiz) {
+		this.write("Student", quiz.getStudent().getName());
+		this.write("Correct", quiz.getGrade());
+		this.write("Total Questions", quiz.getTotalQuestions());
+		
+		for (MultipleChoice question : quiz.getUsedMCQuestions()) {
+			this.writeQuestion(question);
+		}
 	}
 
 	public void writeQuestion(MultipleChoice question) {

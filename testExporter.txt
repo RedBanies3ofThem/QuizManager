@@ -1,3 +1,9 @@
+
+Student : Bob Smith
+
+Correct : 2
+
+Total Questions : 5
 -------Question #1-------
 Where do you live?
 
@@ -38,7 +44,3 @@ B) Blue
 C) Green
 D) Yellow
 
-
-Score : 1
-
-Percentage complete : 1.0
