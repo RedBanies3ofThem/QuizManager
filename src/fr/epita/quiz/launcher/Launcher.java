@@ -53,8 +53,13 @@ public class Launcher extends Application {
 		this.window.setTitle("Quiz Wizard");
 
 		Label name = new Label();
+		name.setPadding(new Insets(5, 5, 5, 5));
+		
 		Label grade = new Label(); 
+		grade.setPadding(new Insets(5, 5, 5, 5));
+		
 		Label questionCount = new Label();
+		questionCount.setPadding(new Insets(5, 5, 5, 5));
 		
 		// Main Scene -------------------------------------------------
 		
@@ -75,21 +80,34 @@ public class Launcher extends Application {
 		textQuizSize.setPrefColumnCount(2);		
 
 		Label labelQuestionNumber = new Label();
+		labelQuestionNumber.setPadding(new Insets(5, 5, 5, 5));		
+		
 		Label labelQuestion = new Label();
+		labelQuestion.setPadding(new Insets(5, 5, 5, 5));		
+		
 		ToggleGroup group = new ToggleGroup();
+		
 		RadioButton labelOp1 = new RadioButton();
+		labelOp1.setPadding(new Insets(5, 5, 5, 5));
 		labelOp1.setToggleGroup(group);
+		
 		RadioButton labelOp2 = new RadioButton();
+		labelOp2.setPadding(new Insets(5, 5, 5, 5));
 		labelOp2.setToggleGroup(group);
+		
 		RadioButton labelOp3 = new RadioButton();
+		labelOp3.setPadding(new Insets(5, 5, 5, 5));
 		labelOp3.setToggleGroup(group);
+		
 		RadioButton labelOp4 = new RadioButton();
+		labelOp4.setPadding(new Insets(5, 5, 5, 5));
 		labelOp4.setToggleGroup(group);
 		
 		this.progressBar = new ProgressBar();
 		
 		this.buttonCreateTest = new Button();
 		this.buttonCreateTest.setText("Start New Test");
+		this.buttonCreateTest.setPadding(new Insets(5, 5, 5, 5));
 		this.buttonCreateTest.setOnAction( a -> {
 			System.out.println("Start Button clicked");
 			
@@ -170,6 +188,7 @@ public class Launcher extends Application {
 		
 		this.buttonSubmitAnswer = new Button();
 		this.buttonSubmitAnswer.setText("Submit Answer");
+		this.buttonSubmitAnswer.setPadding(new Insets(5, 5, 5, 5));
 		this.buttonSubmitAnswer.setOnAction( a -> {
 			System.out.println("Submit button clicked");
 			
@@ -206,6 +225,7 @@ public class Launcher extends Application {
 		
 		this.buttonHome = new Button();
 		this.buttonHome.setText("Return to Main Menu");
+		this.buttonHome.setPadding(new Insets(10, 10, 10, 10));
 		this.buttonHome.setOnAction( a -> {
 			System.out.println("Home button clicked");
 			this.window.setScene(sceneMain);			
@@ -213,6 +233,7 @@ public class Launcher extends Application {
 		
 		this.buttonExport = new Button();
 		this.buttonExport.setText("Export Quiz");
+		this.buttonExport.setPadding(new Insets(10, 10, 10, 10));
 		this.buttonExport.setOnAction( a -> {
 			System.out.println("Export Quiz button clicked");
 			this.exporter.exportAll(this.quiz, false);
