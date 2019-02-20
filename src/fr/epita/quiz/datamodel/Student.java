@@ -1,6 +1,5 @@
 package fr.epita.quiz.datamodel;
 
-import java.util.List;
 
 /** Class to capture student information before taking a quiz
  * @author Jonathan Sadighian and Rhea Moubarak
