@@ -23,41 +23,40 @@ public class TestDAO {
 			
 			mcq = new MultipleChoice();
 			mcq.setQuestion("What is " + i +" x " + i + " ?");
-			mcq.setDifficulty(3);
+			mcq.setDifficulty(4);
 
 			topicsList = new LinkedList<String>();
 			
 			if ( i % 2 == 0) {
 				topicsList.add("Math");
-				topicsList.add("Science");				
+				topicsList.add("Spanish");				
 			}
 			topicsList.add("Masters");
 			topicsList.add("EPITA");
 			mcq.setTopics(topicsList);
-			mcq.addOption(Double.toString(Math.multiplyExact(i, i)));
+			mcq.addOption(Double.toString(Math.multiplyExact(i, i*3)));
 			mcq.addOption(Double.toString(Math.multiplyExact(i, i+1)));
-			mcq.addOption(Double.toString(Math.multiplyExact(i, i+2)));
-			mcq.addOption(Double.toString(Math.multiplyExact(i, i+3)));
-			mcq.setAnswer(1);
+			mcq.addOption(Double.toString(Math.multiplyExact(i, i*10)));
+			mcq.addOption(Double.toString(Math.multiplyExact(i, i)));
+			mcq.setAnswer(4);
 
 			dao.create(mcq);
 			
 			oq = new Open();
 			oq.setQuestion("What is " + i +" x " + i + " ?");
-			oq.setDifficulty(3);
+			oq.setDifficulty(4);
 			
 			topicsListOp = new LinkedList<String>();	
 			
 			if ( i % 2 == 0) {
 				topicsListOp.add("Math");
-				topicsListOp.add("Science");				
+				topicsListOp.add("Spanish");				
 			}
 			topicsListOp.add("Masters");
 			topicsListOp.add("EPITA");
 			oq.setTopics(topicsList);
 			oq.setResponse(Double.toString(Math.multiplyExact(i, i)));
 			oq.setAnswer(1);
-			
 
 			dao.create(oq);
 			
