@@ -61,7 +61,6 @@ public class TestDAO {
 			dao.create(oq);
 			
 		}  // End of for loop
-
 		
 		/*	READ method Test 		*/
 		List<MultipleChoice> results = dao.read();
