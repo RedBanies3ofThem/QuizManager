@@ -1,13 +1,15 @@
 # QuizManager
 Course Project for Java class at EPITA's Master's Program
 
-## Design
-PLACEHOLDER 
+## Class Diagram
+
+![UML Class Diagram](ClassDiagramOverview.png)
 
 ## Getting Started
 PLACEHOLDER 
 
 ## Create Table
+```
 create table BANK(
 	id bigint auto_increment, 
 	QUESTION varchar(255), 
@@ -19,3 +21,4 @@ create table BANK(
 	OP_4 varchar(255), 
 	ANSWER INT
 );
+```
