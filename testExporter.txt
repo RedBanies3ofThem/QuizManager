@@ -1,46 +1,44 @@
-
-Student : Bob Smith
-
-Correct : 2
-
-Total Questions : 5
 -------Question #1-------
-Where do you live?
+What is 2 x 2 ?
 
-A) Red
-B) Blue
-C) Green
-D) Yellow
+(write your response below)
+   
+   
+   
 
 -------Question #2-------
-Where do you live?
+What is your favorite expression in French?
 
-A) Red
-B) Blue
-C) Green
-D) Yellow
+(write your response below)
+   
+   
+   
 
 -------Question #3-------
-Where do you live?
+What is 6 x 6 ?
 
-A) Red
-B) Blue
-C) Green
-D) Yellow
+A) 46656.0
+B) 279936.0
+C) 1679616.0
+D) 1.0077696E7
 
 -------Question #4-------
-Where do you live?
+What is 2 x 2 ?
 
-A) Red
-B) Blue
-C) Green
-D) Yellow
+A) 4.0
+B) 8.0
+C) 16.0
+D) 32.0
 
 -------Question #5-------
-Where do you live?
+What is 9 x 9 ?
 
-A) Red
-B) Blue
-C) Green
-D) Yellow
+A) 3.87420489E8
+B) 3.486784401E9
+C) 3.1381059609E10
+D) 2.82429536481E11
 
+
+Score : 0
+
+Percentage complete : 1.0

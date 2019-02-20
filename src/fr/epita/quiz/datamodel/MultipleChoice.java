@@ -13,22 +13,6 @@ public class MultipleChoice extends Question {
 		super();
 		this.setOptions(new LinkedList<String>());
 	}
-	
-	public int getChoice() {
-		return choice;
-	}
-	
-	public void setChoice(int choice) {
-		this.choice = choice;
-	}
-	
-	public int getAnswer() {
-		return answer;
-	}
-
-	public void setAnswer(int answer) {
-		this.answer = answer;
-	}
 
 	public List<String> getOptions() {
 		return options;
@@ -50,6 +34,26 @@ public class MultipleChoice extends Question {
 	}
 
 	@Override
+	public void setChoice(int choice) {
+		this.choice = choice;
+	}
+
+	@Override
+	public int getChoice() {
+		return this.choice;
+	}
+
+	@Override
+	public int getAnswer() {
+		return answer;
+	}
+
+	@Override
+	public void setAnswer(int answer) {
+		this.answer = answer;
+	}
+
+	@Override
 	public void gradeAnswer() {
 		if (this.choice == this.answer) {
 			System.out.println("Question #"+ this.number + " : Bien fait!");
@@ -58,6 +62,18 @@ public class MultipleChoice extends Question {
 			System.out.println("Question #"+ this.number + " : Wrong answer.");
 			this.isCorrect = false;
 		}
+	}
+
+	@Override
+	public String getResponse() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setResponse(String response) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

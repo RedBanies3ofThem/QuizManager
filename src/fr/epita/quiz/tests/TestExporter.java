@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import fr.epita.quiz.datamodel.MultipleChoice;
+import fr.epita.quiz.datamodel.Question;
 import fr.epita.quiz.datamodel.Student;
 import fr.epita.quiz.services.Exporter;
 import fr.epita.quiz.services.Quiz;
@@ -17,13 +18,13 @@ public class TestExporter {
 		
 		Student student = new Student("Thibault", "123");
 		List<String> topics = new LinkedList<String>();
-		topics.add("France");
-		Quiz quiz = new Quiz(student, topics, 5);
+		topics.add("EPITA");
+		Quiz quiz = new Quiz(student, topics, 5, true);
 		quiz.loadNewQuiz();
 		
 		// Take the quiz
 		for (int i=0; i<quiz.getTotalQuestions(); i++) {
-			MultipleChoice question = quiz.getNewQuestion(1);
+			Question question = quiz.getNewQuestion();
 			System.out.println("New Question: " + question.getQuestion());
 			question.setChoice(quiz.getRandom().nextInt(4));
 			quiz.processNewQuestion(question);

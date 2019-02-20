@@ -2,6 +2,7 @@ package fr.epita.quiz.datamodel;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -49,5 +50,23 @@ public class Associative extends Question {
 			System.out.println("Wrong answer for question #" + this.number);
 			this.isCorrect = false;
 		}
+	}
+
+	@Override
+	public String getResponse() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setResponse(String response) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<String> getOptions() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

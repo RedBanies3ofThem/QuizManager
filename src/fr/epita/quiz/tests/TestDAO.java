@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import fr.epita.quiz.datamodel.MultipleChoice;
+import fr.epita.quiz.datamodel.Open;
+import fr.epita.quiz.datamodel.Question;
 import fr.epita.quiz.services.QuestionJDBCDAO;
 
 
@@ -14,66 +16,111 @@ public class TestDAO {
 		
 		// Instantiate data access object
 		QuestionJDBCDAO dao = new QuestionJDBCDAO();
-		
-		/*	CREATE method Test 		*/
-		MultipleChoice question = new MultipleChoice();
-		question.setQuestion("What is my favorite color?");
-		question.setDifficulty(3);
-		LinkedList<String> topicsList = new LinkedList<String>();
-		topicsList.add("France");
-		topicsList.add("Informatique");
-		topicsList.add("Unix");
-		topicsList.add("Java");
-		question.setTopics(topicsList);
-		question.addOption("Red");
-		question.addOption("Blue");
-		question.addOption("Green");
-		question.addOption("Yellow");
-		question.setAnswer(1);
-		dao.create(question);
+		MultipleChoice mcq;
+		Open oq;
+		List<String> topicsList, topicsListOp;
+		for (int i=0; i<10; i++) {
+			
+			mcq = new MultipleChoice();
+			mcq.setQuestion("What is " + i +" x " + i + " ?");
+			mcq.setDifficulty(3);
+
+			topicsList = new LinkedList<String>();
+			
+			if ( i % 2 == 0) {
+				topicsList.add("Math");
+				topicsList.add("Science");				
+			}
+			topicsList.add("Masters");
+			topicsList.add("EPITA");
+			mcq.setTopics(topicsList);
+			mcq.addOption(Double.toString(Math.multiplyExact(i, i)));
+			mcq.addOption(Double.toString(Math.multiplyExact(i, i+1)));
+			mcq.addOption(Double.toString(Math.multiplyExact(i, i+2)));
+			mcq.addOption(Double.toString(Math.multiplyExact(i, i+3)));
+			mcq.setAnswer(1);
+
+			dao.create(mcq);
+			
+			oq = new Open();
+			oq.setQuestion("What is " + i +" x " + i + " ?");
+			oq.setDifficulty(3);
+			
+			topicsListOp = new LinkedList<String>();	
+			
+			if ( i % 2 == 0) {
+				topicsListOp.add("Math");
+				topicsListOp.add("Science");				
+			}
+			topicsListOp.add("Masters");
+			topicsListOp.add("EPITA");
+			oq.setTopics(topicsList);
+			oq.setResponse(Double.toString(Math.multiplyExact(i, i)));
+			oq.setAnswer(1);
+			
+
+			dao.create(oq);
+			
+		}  // End of for loop
+
 		
 		/*	READ method Test 		*/
 		List<MultipleChoice> results = dao.read();
+		List<Open> resultsOpen = dao.readOpen();
 		
 		/*	UPDATE method Test 		*/
-		question.setQuestion("Where do you live?");
-		question.setDifficulty(3);
-		topicsList.add("Fruit");
-		topicsList.add("Legumes");
-		topicsList.add("Viandes");
-		topicsList.add("Poisson");
-		question.setTopics(topicsList);
-		question.addOption("London");
-		question.addOption("Paris");
-		question.addOption("New York");
-		question.addOption("Hong Kong");
-		question.setAnswer(2);
-		question.setId(1);
-		dao.update(question);
+		mcq = new MultipleChoice();
+		mcq.setQuestion("Where do you live?");
+		topicsList = new LinkedList<String>();	
+		topicsList.add("Location");
+		topicsList.add("EPITA");
+		mcq.setTopics(topicsList);
+		mcq.setDifficulty(0);
+		mcq.addOption("London");
+		mcq.addOption("Paris");
+		mcq.addOption("New York");
+		mcq.addOption("Hong Kong");
+		mcq.setAnswer(2);
+		mcq.setId(1);
+		dao.update(mcq);
+
+		oq = new Open();
+		oq.setQuestion("What is your favorite expression in French?");
+		topicsListOp = new LinkedList<String>();	
+		topicsListOp.add("Location");
+		topicsListOp.add("EPITA");
+		oq.setTopics(topicsList);
+		oq.setDifficulty(0);
+		oq.setResponse("Je ne suis pas d'accord avec vous.");
+		oq.setId(1);
+		dao.update(oq);
+		
 		
 		/*	DELETE method Test 		*/
-		question.setId(2);
-		dao.delete(question);
+		mcq.setId(3);
+		dao.delete(mcq);
+		
+		oq.setId(3);
+		dao.delete(oq);
 		
 		/*	SEARCH method Test 		*/
-		question.setDifficulty(1);
-		dao.create(question);
-
-		question.setDifficulty(2);
-		dao.create(question);
-
-		question.setDifficulty(3);
-		question.getTopics().clear();
-		
-		dao.create(question);
 		
 		results = dao.search(3);
 		
-		// search by topic
-		topicsList.add("Viandes");
-		topicsList.add("Poisson");
-		question.setTopics(topicsList);
+		// search by topic	
+		topicsList = new LinkedList<String>();
+		topicsListOp = new LinkedList<String>();
+		
+		topicsList.add("Math");
+		topicsList.add("French");	
+		
+		topicsListOp.add("Math");
+		topicsListOp.add("French");
+		
+		mcq.setTopics(topicsList);
+
 		results = dao.search(topicsList);
+		resultsOpen = dao.searchOpen(topicsListOp);
 		
 	}  // end of main()
 

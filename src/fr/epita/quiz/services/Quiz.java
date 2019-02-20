@@ -6,23 +6,27 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 import fr.epita.quiz.datamodel.MultipleChoice;
+import fr.epita.quiz.datamodel.Open;
+import fr.epita.quiz.datamodel.Question;
 import fr.epita.quiz.datamodel.Student;
 
 public class Quiz {
 
 	private String title;
-	private List<MultipleChoice> availableMCQuestions;
-	private List<MultipleChoice> usedMCQuestions;
+	private List<Question> availableQuestions;
+	private List<Question> usedQuestions;
+	
 	private List<String> topics;
 	private int grade;
 	private double progress;
 	private int totalQuestions;
+	private Boolean includeOpenQuestions;
 
 	private Student student;
 	private QuestionJDBCDAO dao;
 	protected Random random;
 
-	public Quiz(Student student, List<String> topics, int totalQuestions) {
+	public Quiz(Student student, List<String> topics, int totalQuestions, Boolean includeOpenQuestions) {
 		this.student = student;
 		this.topics = topics;
 		this.totalQuestions = totalQuestions;
@@ -33,19 +37,34 @@ public class Quiz {
 			temp += " " + topic;
 		}
 		this.title = this.student.getName() + " |" + temp;
-		this.usedMCQuestions = new LinkedList<MultipleChoice>();
+		this.usedQuestions = new LinkedList<Question>();
+		this.availableQuestions = new LinkedList<Question>();
+		this.includeOpenQuestions = includeOpenQuestions;
 	}
 	
 	public void loadNewQuiz() {
 		this.grade = 0;
 		this.progress = 0;
-		this.availableMCQuestions = this.dao.search(this.topics);
-		this.usedMCQuestions.clear();
+		
+		List<MultipleChoice> mcList = this.dao.search(this.topics);
+		for (MultipleChoice q : mcList) {
+			this.availableQuestions.add(q);
+		}
+		
+		if (this.includeOpenQuestions) {
+			
+			List<Open> oqList = this.dao.searchOpen(this.topics);
+			for (Open q : oqList) {
+				this.availableQuestions.add(q);
+			}
+		}
+		
+		this.usedQuestions.clear();
 	}
 	
-	public MultipleChoice getNewQuestion(int difficulty) {
+	public Question getNewQuestion(int difficulty) {
 		// extract a specified difficulty
-		List<MultipleChoice> temp = this.availableMCQuestions.stream()
+		List<Question> temp = this.availableQuestions.stream()
 														.filter(q -> q.getDifficulty() == difficulty)
 														.collect(Collectors.toList());
 		int size = temp.size();
@@ -53,37 +72,39 @@ public class Quiz {
 			System.out.println("getNewQuestion --> ran out of questions");
 			return null;
 		}
-		MultipleChoice newQuestion = temp.remove(this.random.nextInt(size));
-		if (!this.availableMCQuestions.remove(newQuestion)) {
+		Question newQuestion = temp.remove(this.random.nextInt(size));
+		if (!this.availableQuestions.remove(newQuestion)) {
 			System.out.println("getNewQuestion --> Warning! Question not found in available list.");
 		}
 		return newQuestion;
 	}
 	
-	public MultipleChoice getNewQuestion() {
+	public Question getNewQuestion() {
 		// extract a specified difficulty
-		List<MultipleChoice> temp = this.availableMCQuestions.stream().collect(Collectors.toList());
+		List<Question> temp = this.availableQuestions.stream().collect(Collectors.toList());
 		int size = temp.size();
 		if (size < 1) {
 			System.out.println("getNewQuestion --> ran out of questions");
 			return null;
 		}
-		MultipleChoice newQuestion = temp.remove(this.random.nextInt(size));
-		if (!this.availableMCQuestions.remove(newQuestion)) {
+		Question newQuestion = temp.remove(this.random.nextInt(size));
+		if (!this.availableQuestions.remove(newQuestion)) {
 			System.out.println("getNewQuestion --> Warning! Question not found in available list.");
 		}
 		return newQuestion;
 	}
 	
-	public void processNewQuestion(MultipleChoice question) {
-		question.setNumber(this.usedMCQuestions.size() + 1);
+	public void processNewQuestion(Question question) {
+		question.setNumber(this.usedQuestions.size() + 1);
 		question.gradeAnswer();
-		this.usedMCQuestions.add(question);
+		this.usedQuestions.add(question);
 		
 		if (question.getIsCorrect()) {
 			this.grade += 1;
 		}
-		this.progress = (double)this.usedMCQuestions.size() / (double)this.totalQuestions;
+		this.progress = (double)this.usedQuestions.size() / (double)this.totalQuestions;
+		
+		System.out.println("this.progress is now : " + this.progress);
 	}
 
 	public String getTitle() {
@@ -108,22 +129,6 @@ public class Quiz {
 
 	public void setProgress(double progress) {
 		this.progress = progress;
-	}
-
-	public List<MultipleChoice> getMultipleChoice() {
-		return availableMCQuestions;
-	}
-
-	public void setMultipleChoice(List<MultipleChoice> multipleChoice) {
-		this.availableMCQuestions = multipleChoice;
-	}
-
-	public List<MultipleChoice> getUsedMCQuestions() {
-		return usedMCQuestions;
-	}
-
-	public void setUsedMCQuestions(List<MultipleChoice> usedMCQuestions) {
-		this.usedMCQuestions = usedMCQuestions;
 	}
 
 	public List<String> getTopics() {
@@ -154,12 +159,19 @@ public class Quiz {
 		return random;
 	}
 
-	public List<MultipleChoice> getAvailableMCQuestions() {
-		return availableMCQuestions;
+	public List<Question> getAvailableQuestions() {
+		return availableQuestions;
 	}
 
-	public void setAvailableMCQuestions(List<MultipleChoice> availableMCQuestions) {
-		this.availableMCQuestions = availableMCQuestions;
+	public void setAvailableQuestions(List<Question> availableQuestions) {
+		this.availableQuestions = availableQuestions;
 	}
 
+	public List<Question> getUsedQuestions() {
+		return usedQuestions;
+	}
+
+	public void setUsedQuestions(List<Question> usedQuestions) {
+		this.usedQuestions = usedQuestions;
+	}
 }

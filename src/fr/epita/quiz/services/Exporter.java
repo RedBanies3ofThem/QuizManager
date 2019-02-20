@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import fr.epita.quiz.datamodel.MultipleChoice;
+import fr.epita.quiz.datamodel.Open;
+import fr.epita.quiz.datamodel.Question;
 
 
 /** Class to export a quiz to plain text
@@ -50,7 +52,7 @@ public class Exporter {
 			this.write("Total Questions", quiz.getTotalQuestions());
 		}
 		
-		for (MultipleChoice question : quiz.getUsedMCQuestions()) {
+		for (Question question : quiz.getUsedQuestions()) {
 			this.writeQuestion(question);
 		}
 	}
@@ -58,16 +60,30 @@ public class Exporter {
 	/** Write a single question to a file
 	 * @param question (MultipleChoice) question to write to text
 	 */
-	public void writeQuestion(MultipleChoice question) {
-		writer.println("-------Question #" + question.getNumber() + "-------");
-		writer.println(question.getQuestion());
-		writer.println("");
-		writer.println("A) " + question.getOptions().get(0));
-		writer.println("B) " + question.getOptions().get(1));
-		writer.println("C) " + question.getOptions().get(2));
-		writer.println("D) " + question.getOptions().get(3));
-		writer.println("");
-		writer.flush();
+	public void writeQuestion(Question question) {
+		
+		if (question.getClass() == MultipleChoice.class) {
+			writer.println("-------Question #" + question.getNumber() + "-------");
+			writer.println(question.getQuestion());
+			writer.println("");
+			writer.println("A) " + question.getOptions().get(0));
+			writer.println("B) " + question.getOptions().get(1));
+			writer.println("C) " + question.getOptions().get(2));
+			writer.println("D) " + question.getOptions().get(3));
+			writer.println("");
+			writer.flush();
+		}
+		else if (question.getClass() == Open.class) {
+			writer.println("-------Question #" + question.getNumber() + "-------");
+			writer.println(question.getQuestion());
+			writer.println("");
+			writer.println("(write your response below)");
+			writer.println("   ");
+			writer.println("   ");
+			writer.println("   ");
+			writer.println("");
+			writer.flush();
+		}
 	}
 	
 	/** Write a key-value styled comment in plain text export

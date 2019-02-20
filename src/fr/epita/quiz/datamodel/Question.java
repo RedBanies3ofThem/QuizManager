@@ -1,10 +1,11 @@
 package fr.epita.quiz.datamodel;
 
-import java.sql.Array;
+
 import java.util.LinkedList;
 import java.util.List;
 
-public class Question {
+
+public abstract class Question implements QuestionI {
 	
 	protected String question;
 	protected List<String> topics;
@@ -70,8 +71,5 @@ public class Question {
 		this.isCorrect = isCorrect;
 	}
 	
-	public void gradeAnswer() {
-		System.out.println("Need to implement method: gradeAnswer()");
-	}
 
 }
