@@ -28,6 +28,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
+/** Entry Point to run the Quiz Manager application
+ * @author Jonathan Sadighian and Rhea Moubarak
+ *
+ */
 public class Launcher extends Application {
 
 	private Button buttonCreateTest, buttonSubmitAnswer, buttonClear, buttonHome, buttonExport, buttonSubmitAnswer2;
@@ -50,6 +54,9 @@ public class Launcher extends Application {
 		launch(args);
 	}
 
+	/* (non-Javadoc)
+	 * @see javafx.application.Application#start(javafx.stage.Stage)
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		this.window = primaryStage;
@@ -67,8 +74,6 @@ public class Launcher extends Application {
 		this.questionCount.setPadding(new Insets(5, 5, 5, 5));
 		
 		// Main Scene -------------------------------------------------
-		
-
 		
 		this.textName = new TextField();
 		this.textName.setPromptText("Enter Student Name");
@@ -294,6 +299,9 @@ public class Launcher extends Application {
 		this.window.show();
 	}  // End of Start()
 
+	/** Method to update GUI elements between button clicks
+	 * 
+	 */
 	private void updateUI() {
 		this.currentQuestion = this.quiz.getNewQuestion();
 		
@@ -340,6 +348,13 @@ public class Launcher extends Application {
 
 	}  // End of updateQuizUI()
 	
+	/** Method to extract the specific radial button a user has selected
+	 * @param labelOp1 Option 1
+	 * @param labelOp2 Option 2
+	 * @param labelOp3 Option 3
+	 * @param labelOp4 Option 4
+	 * @return (int) User's selection
+	 */
 	private int getUserChoice(RadioButton labelOp1, RadioButton labelOp2, 
 								RadioButton labelOp3, RadioButton labelOp4) {
 		int ret = 0;
