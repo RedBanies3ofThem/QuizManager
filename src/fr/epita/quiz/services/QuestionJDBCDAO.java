@@ -13,6 +13,11 @@ import java.util.List;
 import fr.epita.quiz.datamodel.MultipleChoice;
 import fr.epita.quiz.datamodel.Question;
 
+
+/** Data access object class Quiz Manager to use the H2 database
+ * @author Jonathan Sadighian and Rhea Moubarak
+ *
+ */
 public class QuestionJDBCDAO {
 	
    private static String INSERT_STATEMENT = "INSERT INTO BANK (QUESTION, DIFFICULTY, TOPICS, "
@@ -23,7 +28,10 @@ public class QuestionJDBCDAO {
    private static String DELETE_STATEMENT = "DELETE FROM BANK WHERE ID=?";
    private static String SEARCH_STATEMENT = "SELECT * from BANK WHERE DIFFICULTY=?";
    
-   public void create(MultipleChoice question) {
+	/** Create new record in database method
+	 * @param question (MultipleChoice) Record to insert into the database
+	 */
+	public void create(MultipleChoice question) {
 		try (Connection connection = getConnection();
 			PreparedStatement insertStatement = connection.prepareStatement(INSERT_STATEMENT); ) {
 			insertStatement.setString(1, question.getQuestion());
@@ -45,6 +53,9 @@ public class QuestionJDBCDAO {
 		}
 	}
 	
+	/** Select all records in database
+	 * @return (List MultipleChoice) List of ALL multiple choice questions found in the database
+	 */
 	public List<MultipleChoice> read() {
 		List<MultipleChoice> resultList = new LinkedList<MultipleChoice>();
 		try (Connection connection = getConnection();
@@ -82,6 +93,9 @@ public class QuestionJDBCDAO {
 		return resultList;
 	}
 	
+	/** Update a specific record in the database
+	 * @param question (MultipleChoice) updated question to update in database
+	 */
 	public void update(MultipleChoice question) {
 		try (Connection connection = getConnection();
 			PreparedStatement updateStatement = connection.prepareStatement(UPDATE_STATEMENT)){
@@ -103,6 +117,9 @@ public class QuestionJDBCDAO {
 		}
 	}
 
+	/** Delete a specific record in the database
+	 * @param question (MultipleChoice) question to remove from the database
+	 */
 	public void delete(MultipleChoice question) {
 		try (Connection connection = getConnection();
 			PreparedStatement deleteStatement = connection.prepareStatement(DELETE_STATEMENT)){
@@ -115,6 +132,10 @@ public class QuestionJDBCDAO {
 		}
 	}
 	
+	/** Search for questions in database for a given difficulty
+	 * @param difficulty (int) difficulty setting, ranges from 0 to 5
+	 * @return (List MultipleChoice) List of ALL multiple choice questions in database for a given difficulty
+	 */
 	public List<MultipleChoice> search(int difficulty) {
 		List<MultipleChoice> resultList = new LinkedList<MultipleChoice>();
 		try (Connection connection = getConnection();
@@ -151,6 +172,10 @@ public class QuestionJDBCDAO {
 		return resultList;
 	}
 	
+	/** Search for questions in database for a given topic
+	 * @param topicSearch (List String) List of topics to search for in the database
+	 * @return (List MultipleChoice) List of ALL multiple choice questions in database for a given set of topics
+	 */
 	public List<MultipleChoice> search(List<String> topicSearch) {
 		List<MultipleChoice> resultList = new LinkedList<MultipleChoice>();
 		String SEARCH_STATEMENT_TOPICS = "SELECT * from BANK WHERE";
@@ -202,6 +227,10 @@ public class QuestionJDBCDAO {
 		return resultList;
 	}
 	
+	/** Create connection with H2 database
+	 * @return (Connection) singleton driver connection to the H2 database
+	 * @throws SQLException Unable to connect to the H2 database
+	 */
 	private Connection getConnection() throws SQLException {
 		Configuration conf = Configuration.getInstance();
 		String jdbcUrl = conf.getConfigurationValue("jdbc.url");

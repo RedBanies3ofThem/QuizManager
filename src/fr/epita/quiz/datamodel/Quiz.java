@@ -59,6 +59,21 @@ public class Quiz {
 		return newQuestion;
 	}
 	
+	public MultipleChoice getNewQuestion() {
+		// extract a specified difficulty
+		List<MultipleChoice> temp = this.availableMCQuestions.stream().collect(Collectors.toList());
+		int size = temp.size();
+		if (size < 1) {
+			System.out.println("getNewQuestion --> ran out of questions");
+			return null;
+		}
+		MultipleChoice newQuestion = temp.remove(this.random.nextInt(size));
+		if (!this.availableMCQuestions.remove(newQuestion)) {
+			System.out.println("getNewQuestion --> Warning! Question not found in available list.");
+		}
+		return newQuestion;
+	}
+	
 	public void processNewQuestion(MultipleChoice question) {
 		question.setNumber(this.usedMCQuestions.size() + 1);
 		question.gradeAnswer();

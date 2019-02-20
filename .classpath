@@ -6,6 +6,6 @@
 		</accessrules>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/jonat/Desktop/class/java/databases/h2/bin/h2-1.4.197.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jonat/Desktop/class/java/QuizManager/jars/h2-1.4.197.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

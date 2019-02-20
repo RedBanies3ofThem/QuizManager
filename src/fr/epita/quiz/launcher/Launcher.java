@@ -43,8 +43,7 @@ public class Launcher extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		this.window = primaryStage;
 		this.exporter = new Exporter("testExporter.txt");
-		this.window.setTitle("Quiz Manager");
-		
+		this.window.setTitle("Quiz Wizard");
 
 		Label name = new Label();
 		Label grade = new Label(); 
@@ -108,7 +107,14 @@ public class Launcher extends Application {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Please add a valid topic");
 				alert.setHeaderText(null);
-				alert.setContentText("The topics you entered are not found in the quiz database. Please enter another topic.");
+				if (this.quiz.getAvailableMCQuestions().size() == 0) {
+					alert.setContentText("The topics you entered are not found in the quiz database. Please enter another topic.");
+				}
+				else {
+					alert.setContentText("Not enough questions for that topic." +
+										" Please reduce the number of questions to " + 
+										(this.quiz.getAvailableMCQuestions().size()-1));
+				}
 				alert.showAndWait();
 				return;
 			}
@@ -218,6 +224,10 @@ public class Launcher extends Application {
 	private void updateQuizUI(Label labelQuestionNumber, Label labelQuestion, 
 			RadioButton labelOp1, RadioButton labelOp2, RadioButton labelOp3, RadioButton labelOp4) {
 		this.currentQuestion = this.quiz.getNewQuestion(1);
+		if (this.currentQuestion == null) {
+			this.currentQuestion = this.quiz.getNewQuestion();
+			System.out.println("currentQuestion : " + this.currentQuestion.toString());
+		}
 		this.currentQuestion.setNumber(this.quiz.getUsedMCQuestions().size() + 1);
 		labelQuestionNumber.setText("# " + this.currentQuestion.getNumber() );
 		labelQuestion.setText(this.currentQuestion.getQuestion());
