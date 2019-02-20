@@ -50,6 +50,7 @@ public class Exporter {
 			this.write("Student", quiz.getStudent().getName());
 			this.write("Correct", quiz.getGrade());
 			this.write("Total Questions", quiz.getTotalQuestions());
+			this.write("Topics", quiz.getTopics().toString());
 		}
 		
 		for (Question question : quiz.getUsedQuestions()) {

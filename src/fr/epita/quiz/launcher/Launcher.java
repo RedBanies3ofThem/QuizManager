@@ -187,7 +187,7 @@ public class Launcher extends Application {
 		this.buttonExport.setPadding(new Insets(10, 10, 10, 10));
 		this.buttonExport.setOnAction( a -> {
 			System.out.println("Export Quiz button clicked");
-			this.exporter.exportAll(this.quiz, false);
+			this.exporter.exportAll(this.quiz, true);
 		});
 		
 		this.buttonSubmitAnswer = new Button();
