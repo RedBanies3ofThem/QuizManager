@@ -1,0 +1,44 @@
+-------Question #1-------
+What is 2 x 2 ?
+
+(write your response below)
+   
+   
+   
+
+-------Question #2-------
+What is your favorite expression in French?
+
+(write your response below)
+   
+   
+   
+
+-------Question #3-------
+What is 6 x 6 ?
+
+A) 46656.0
+B) 279936.0
+C) 1679616.0
+D) 1.0077696E7
+
+-------Question #4-------
+What is 2 x 2 ?
+
+A) 4.0
+B) 8.0
+C) 16.0
+D) 32.0
+
+-------Question #5-------
+What is 9 x 9 ?
+
+A) 3.87420489E8
+B) 3.486784401E9
+C) 3.1381059609E10
+D) 2.82429536481E11
+
+
+Score : 0
+
+Percentage complete : 1.0
