@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 
+/**
+ * @author Jonathan Sadighian and Rhea Moubarak
+ *
+ */
 public class Associative extends Question {
 
 	private int answer;

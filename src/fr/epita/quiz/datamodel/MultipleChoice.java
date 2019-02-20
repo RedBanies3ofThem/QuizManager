@@ -3,6 +3,10 @@ package fr.epita.quiz.datamodel;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * @author Jonathan Sadighian and Rhea Moubarak
+ *
+ */
 public class MultipleChoice extends Question {
 	
 	private int answer;

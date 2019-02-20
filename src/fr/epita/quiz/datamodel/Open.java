@@ -2,6 +2,10 @@ package fr.epita.quiz.datamodel;
 
 import java.util.List;
 
+/**
+ * @author Jonathan Sadighian and Rhea Moubarak
+ *
+ */
 public class Open extends Question {
 
 	private String response;

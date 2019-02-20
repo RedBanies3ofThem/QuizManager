@@ -2,6 +2,10 @@ package fr.epita.quiz.datamodel;
 
 import java.util.List;
 
+/**
+ * @author Jonathan Sadighian and Rhea Moubarak
+ *
+ */
 public interface QuestionI {
 	
 	public int getNumber();

@@ -4,7 +4,10 @@ package fr.epita.quiz.datamodel;
 import java.util.LinkedList;
 import java.util.List;
 
-
+/**
+ * @author Jonathan Sadighian and Rhea Moubarak
+ *
+ */
 public abstract class Question implements QuestionI {
 	
 	protected String question;
