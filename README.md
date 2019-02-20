@@ -1,14 +1,15 @@
 # QuizManager
 Course Project for Java class at EPITA's Master's Program
 
-## Class Diagram
+### Getting Started
+To run this application, you'll need to have H2 service up and running.
 
-![UML Class Diagram](ClassDiagramOverview.png)
+After the H2 service is running, run the `QuizManagerApplication.jar` to 
+start the application.
 
-## Getting Started
-PLACEHOLDER 
+The scripts below are for creating the H2 tables, if needed.
 
-## Create Table
+### Create Tables
 ```
 create table MCQ(
 	id bigint auto_increment, 
@@ -30,3 +31,7 @@ create table OQ(
 	ANSWER varchar(255)
 );
 ```
+
+### Class Diagram
+
+![UML Class Diagram](ClassDiagramOverview.png)
