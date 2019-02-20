@@ -14,12 +14,12 @@ public interface QuestionI {
 	public int getNumber();
 
 	/** Setter for a question's number relative to the specific quiz
-	 * @param number
+	 * @param number (int) question number
 	 */
 	public void setNumber(int number);
 
 	/** Getter for a question's ID# as specified in the H2 database
-	 * @return
+	 * @return (int) Student ID number
 	 */
 	public int getId();
 
