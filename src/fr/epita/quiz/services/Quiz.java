@@ -1,11 +1,12 @@
-package fr.epita.quiz.datamodel;
+package fr.epita.quiz.services;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import fr.epita.quiz.services.QuestionJDBCDAO;
+import fr.epita.quiz.datamodel.MultipleChoice;
+import fr.epita.quiz.datamodel.Student;
 
 public class Quiz {
 
@@ -45,7 +46,7 @@ public class Quiz {
 	public MultipleChoice getNewQuestion(int difficulty) {
 		// extract a specified difficulty
 		List<MultipleChoice> temp = this.availableMCQuestions.stream()
-														.filter(q -> q.difficulty == difficulty)
+														.filter(q -> q.getDifficulty() == difficulty)
 														.collect(Collectors.toList());
 		int size = temp.size();
 		if (size < 1) {

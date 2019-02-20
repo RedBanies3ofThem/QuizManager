@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import fr.epita.quiz.datamodel.MultipleChoice;
-import fr.epita.quiz.datamodel.Quiz;
 
 
 /** Class to export a quiz to plain text
@@ -25,24 +24,31 @@ public class Exporter {
 	 * @param path (String) file path to the file being exported, including the filename itself
 	 * @throws IOException Unable to find file
 	 */
-	public Exporter(String path) throws IOException {
-		File file = new File(path);
-		if (!file.exists()) {
-			file.getParentFile().mkdirs();
-			file.createNewFile();
+	public Exporter(String path) {
+		try {
+			File file = new File(path);
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			this.setFile(file);
+			this.writer = new PrintWriter(new FileOutputStream(this.getFile(), false));
+			this.setScanner(new Scanner(this.getFile()));
 		}
-		this.setFile(file);
-		this.writer = new PrintWriter(new FileOutputStream(file, false));
-		this.setScanner(new Scanner(file));
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	/** Export a completed quiz to plain text. Implemented in the GUI.
 	 * @param quiz (Quiz) Completed quiz
+	 * @param includeSummary (Boolean) If TRUE, output will include student name and grade
 	 */
-	public void exportAll(Quiz quiz) {
-		this.write("Student", quiz.getStudent().getName());
-		this.write("Correct", quiz.getGrade());
-		this.write("Total Questions", quiz.getTotalQuestions());
+	public void exportAll(Quiz quiz, Boolean includeSummary) {
+		if (includeSummary.booleanValue()) {
+			this.write("Student", quiz.getStudent().getName());
+			this.write("Correct", quiz.getGrade());
+			this.write("Total Questions", quiz.getTotalQuestions());
+		}
 		
 		for (MultipleChoice question : quiz.getUsedMCQuestions()) {
 			this.writeQuestion(question);

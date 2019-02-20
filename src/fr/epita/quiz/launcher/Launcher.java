@@ -1,14 +1,18 @@
 package fr.epita.quiz.launcher;
 
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import fr.epita.quiz.datamodel.MultipleChoice;
-import fr.epita.quiz.datamodel.Quiz;
 import fr.epita.quiz.datamodel.Student;
+import fr.epita.quiz.services.Configuration;
 import fr.epita.quiz.services.Exporter;
+import fr.epita.quiz.services.Quiz;
 import javafx.application.*;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -16,6 +20,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -33,6 +38,7 @@ public class Launcher extends Application {
 	private Quiz quiz;
 	private MultipleChoice currentQuestion;
 	private Exporter exporter;
+	private ProgressBar progressBar;
 
 	public static void main(String[] args) {
 		System.out.println("Running main method");
@@ -42,7 +48,8 @@ public class Launcher extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		this.window = primaryStage;
-		this.exporter = new Exporter("testExporter.txt");
+		this.exporter = new Exporter(Configuration.getInstance()
+												  .getConfigurationValue("export.filename"));
 		this.window.setTitle("Quiz Wizard");
 
 		Label name = new Label();
@@ -79,6 +86,8 @@ public class Launcher extends Application {
 		RadioButton labelOp4 = new RadioButton();
 		labelOp4.setToggleGroup(group);
 		
+		this.progressBar = new ProgressBar();
+		
 		this.buttonCreateTest = new Button();
 		this.buttonCreateTest.setText("Start New Test");
 		this.buttonCreateTest.setOnAction( a -> {
@@ -108,7 +117,8 @@ public class Launcher extends Application {
 				alert.setTitle("Please add a valid topic");
 				alert.setHeaderText(null);
 				if (this.quiz.getAvailableMCQuestions().size() == 0) {
-					alert.setContentText("The topics you entered are not found in the quiz database. Please enter another topic.");
+					alert.setContentText("The topics you entered are not found in the quiz database." +
+										" Please enter another topic.");
 				}
 				else {
 					alert.setContentText("Not enough questions for that topic." +
@@ -120,6 +130,7 @@ public class Launcher extends Application {
 			}
 			
 			updateQuizUI(labelQuestionNumber, labelQuestion, labelOp1, labelOp2, labelOp3, labelOp4);
+			this.progressBar.setProgress(this.quiz.getProgress());
 			
 			this.window.setScene(sceneQuiz);
 		});
@@ -166,8 +177,7 @@ public class Launcher extends Application {
 			this.quiz.processNewQuestion(this.currentQuestion);
 			
 			updateQuizUI(labelQuestionNumber, labelQuestion, labelOp1, labelOp2, labelOp3, labelOp4);
-			
-			System.out.println("this.quiz.getProgress() " + this.quiz.getProgress());
+			this.progressBar.setProgress(this.quiz.getProgress());
 			
 			if (this.quiz.getProgress() >= 1.0) {
 				name.setText("Student: " + this.quiz.getStudent().getName());
@@ -180,6 +190,7 @@ public class Launcher extends Application {
 		
 		VBox layoutQuiz = new VBox();
 		layoutQuiz.setPadding(new Insets(10, 10, 10, 10));
+		layoutQuiz.getChildren().add(this.progressBar);
 		layoutQuiz.getChildren().add(labelQuestionNumber);
 		layoutQuiz.getChildren().add(labelQuestion);
 		layoutQuiz.getChildren().add(labelOp1);
@@ -204,7 +215,7 @@ public class Launcher extends Application {
 		this.buttonExport.setText("Export Quiz");
 		this.buttonExport.setOnAction( a -> {
 			System.out.println("Export Quiz button clicked");
-			this.exporter.exportAll(this.quiz);
+			this.exporter.exportAll(this.quiz, false);
 		});
 		
 		VBox layoutSummary = new VBox();
@@ -237,25 +248,25 @@ public class Launcher extends Application {
 		labelOp4.setText(this.currentQuestion.getOptions().get(3));
 	}  // End of updateQuizUI()
 	
-	private int getUserChoice(RadioButton labelOp1, RadioButton labelOp2, RadioButton labelOp3, RadioButton labelOp4) {
+	private int getUserChoice(RadioButton labelOp1, RadioButton labelOp2, 
+								RadioButton labelOp3, RadioButton labelOp4) {
 		int ret = 0;
 		if (labelOp1.isSelected()) {
 			ret = 1;
+			labelOp1.setSelected(false);
 		} 
-		else if (labelOp2.isSelected()) {
+		if (labelOp2.isSelected()) {
 			ret = 2;
+			labelOp2.setSelected(false);
 		} 
-		else if (labelOp3.isSelected()) {
+		if (labelOp3.isSelected()) {
 			ret = 3;
+			labelOp3.setSelected(false);
 		} 
-		else if (labelOp4.isSelected()) {
+		if (labelOp4.isSelected()) {
 			ret = 4;
+			labelOp4.setSelected(false);
 		}
-
-		labelOp1.setSelected(false);
-		labelOp2.setSelected(false);
-		labelOp3.setSelected(false);
-		labelOp4.setSelected(false);
 		
 		return ret;
 	}  // End of getUserChoice()

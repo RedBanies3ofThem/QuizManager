@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import fr.epita.quiz.datamodel.MultipleChoice;
-import fr.epita.quiz.datamodel.Quiz;
 import fr.epita.quiz.datamodel.Student;
+import fr.epita.quiz.services.Quiz;
 
 public class TestQuiz {
 
